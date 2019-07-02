@@ -1,5 +1,18 @@
 import React, { Component } from 'react';
-import { Form, Input, Card, Table, Button, Modal, Icon, Radio, Row, Col, Select } from 'antd';
+import {
+  Form,
+  Input,
+  Card,
+  Table,
+  Button,
+  Modal,
+  Icon,
+  Radio,
+  Row,
+  Col,
+  Select,
+  message,
+} from 'antd';
 import { connect } from 'dva';
 import { PAGE_SIZE } from './constants';
 import { routerRedux } from 'dva/router';
@@ -44,6 +57,7 @@ class User extends Component {
     let that = this;
     const ids = this.props.selectedRowKeys;
     if (!ids.length) {
+      message.info('请选择数据');
       return false;
     }
     confirm({
@@ -62,7 +76,7 @@ class User extends Component {
   // 搜索
   searchHadle = () => {
     let values = this.searchForm.props.form.getFieldsValue();
-    if (values.gender == -1) {
+    if (Number.parseInt(values.gender) === -1) {
       delete values.gender;
     }
     // 去除空的字段
@@ -148,7 +162,7 @@ class UserTable extends Component {
           } else {
             return '男';
           }
-        }
+        },
       },
       {
         title: '邮箱',
